@@ -26,25 +26,26 @@ module Scrapper
 
     uri = URI(movie_showtime_links[0])
     body = Net::HTTP.get(uri)
-
     document = Nokogiri::HTML(body)
-    panels = document.css('.panel.panel-default')
 
-    # Find day separator
-    panelNo = panels[0].css('.panel-collapse.collapse.in').attr("id")
-    puts panelNo
+    # panel contains cinema name and showtime
+    tab_panes = document.css('.tab-pane') + document.css('.tab-pane.active')
+    tab_panes.each do |tab_pane|
+      day = tab_pane.attr("id")
+      puts day
 
-    cinema = panels[0].css('.panel-title h4').text
+      tab_pane.css('.panel.panel-default').each do |panel_default|
+        # cinema = pd.css('.panel-title h4').text
 
-    timing_nodes = panels[0].css('.row')
-    puts cinema
+        panel_default.css('.row').each do |row|
+          location = row.css('.col-md-12.col-sm-12.col-xs-12.cinemaname').text
+          timings = row.css('li a')
 
-    timing_nodes.each do |node|
-      location = node.css('.col-md-12.col-sm-12.col-xs-12.cinemaname').text
-      timings = node.css('li a')
-
-      puts location
-      timings.each { |t| puts t.text }
+          puts location
+          timings.each { |t| puts t.text }
+        end
+      end
     end
+
   end
 end
