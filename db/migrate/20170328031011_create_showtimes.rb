@@ -7,7 +7,7 @@ class CreateShowtimes < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
-    
+
     add_foreign_key :showtimes, :movie_id
     add_foreign_key :showtimes, :cinema_id
   end

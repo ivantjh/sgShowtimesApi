@@ -10,14 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170328031131) do
+ActiveRecord::Schema.define(version: 20170329034209) do
 
   create_table "cinemas", force: :cascade do |t|
     t.string "name"
   end
 
-  create_table "movies", force: :cascade do |t|
+  create_table "genres", force: :cascade do |t|
     t.string "name"
+  end
+
+  create_table "movie_genres", force: :cascade do |t|
+    t.integer "movie_id"
+    t.integer "genre_id"
+  end
+
+  create_table "movies", force: :cascade do |t|
+    t.string  "title"
+    t.string  "language"
+    t.string  "age_rating"
+    t.integer "duration_mins"
   end
 
   create_table "showtimes", force: :cascade do |t|
