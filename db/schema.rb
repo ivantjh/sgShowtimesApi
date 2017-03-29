@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 20170329034209) do
   end
 
   create_table "showtimes", force: :cascade do |t|
-    t.datetime "timing"
+    t.datetime "time"
     t.integer  "movie_id"
     t.integer  "cinema_id"
     t.datetime "created_at", null: false
