@@ -6,7 +6,7 @@ require './app/scraper'
 configure do
   set :database, { adapter: "sqlite3", database: "db.sqlite3"}
 
-  Scrapper.get_showtimes
+  Scrapper.find_showtimes
 end
 
 get '/' do
