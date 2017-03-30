@@ -5,11 +5,12 @@ require_relative '../models/movie_genres'
 # Scrapes movies from nokogiri document and save them to db
 module MovieScraper
   def self.trim_detail(detail)
-    detail.delete(' /')
+    detail.delete('/').strip
   end
 
   def self.save_genres(genres)
     genres.each do |genre|
+      genre.strip!
       Genre.create(name: genre) unless Genre.exists?(name: genre)
     end
   end
@@ -24,7 +25,9 @@ module MovieScraper
 
   def self.find_genres(details)
     genre_str = details[3]
-    genre_str[0..genre_str.length - 3].split(' / ')
+    genres = genre_str.split(' / ')
+    genres[genres.length - 1] = trim_detail(genres.last)
+    genres
   end
 
   def self.find_duration(details)

@@ -39,8 +39,8 @@ module ShowtimeScraper
     cinema
   end
 
-  def self.save_showtime(movie_id, cinema_id, time)
-    args = { movie_id: movie_id, cinema_id: cinema_id, time: time }
+  def self.save_showtime(movie_id, cinema_id, datetime)
+    args = { movie_id: movie_id, cinema_id: cinema_id, datetime: datetime }
     showtime = Showtime.find_by(**args)
     Showtime.create(**args) if showtime.nil?
   end
