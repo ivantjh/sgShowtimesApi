@@ -3,8 +3,6 @@ require 'sinatra/activerecord'
 
 require_relative 'app/scraper/scraper'
 
-require_relative 'app/routes/movie'
-
 # nodoc
 class SgShowtimesApi < Sinatra::Base
   register Sinatra::ActiveRecordExtension
@@ -15,19 +13,18 @@ class SgShowtimesApi < Sinatra::Base
     # Scraper.find_showtimes
   end
 
-  use MovieRoutes
+  get '/movies' do
+    content_type :json
+    @movies = Movie.all
+    # @movies = Movie.includes(:genre).find()
 
-  # get '/movies' do
-  #   content_type :json
-  #   @movies = Movie.includes(:genre).find()
-  #
-  #   @movies.to_json
-  # end
-  #
-  # not_found do
-  #   status 404
-  #   '404 This is not the endpoint you are looking for.'
-  # end
+    @movies.to_json
+  end
+
+  not_found do
+    status 404
+    '404 This is not the endpoint you are looking for.'
+  end
 
   run! if app_file == $PROGRAM_NAME
 end
