@@ -1,15 +1,13 @@
-
+require_relative '../constants'
 require_relative 'showtime'
 
 class Cinema < ActiveRecord::Base
   has_many :showtimes
   has_many :movies, through: :showtimes
 
-  DAY_IN_SECOND = 60 * 60 * 24
-
   def movie_showtimes(day_no, movie_id)
     # Retrieve showtimes belonging to this cinema and playing movie_id on day_no
-    start_time = Time.now.midnight + day_no * DAY_IN_SECOND
+    start_time = Time.now.midnight + day_no * CONST::DAY_IN_SECOND
     retrieved_showtimes = showtimes
                           .where(
                             cinema_id: id,

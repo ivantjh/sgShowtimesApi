@@ -1,4 +1,5 @@
 require 'jbuilder'
+require_relative '../constants'
 require_relative 'cinema'
 
 # nodoc
@@ -20,36 +21,26 @@ class Movie < ActiveRecord::Base
     end
   end
 
-  # def to_showtimes_builder
-  #   movie.showtimes.cinema.each do |cinema|
-  #   end
-  #
-  #   # to_builder
-  # end
+  def find_showtimes_by_cinema(showtimes, cinema)
+    showtimes
+      .select { |showtime| showtime.cinema_id == cinema.id }
+      .map(&:to_time_str)
+  end
 
   # Formats showtimes obj
   def showtimes_by_cinema_json(day_no)
-    # cinemas.each { |c| puts c.name }
-    cinemas.uniq.map { |c| c.movie_showtimes(day_no, id) }
-  end
+    # cinemas.uniq.map { |c| c.movie_showtimes(day_no, id) }
+    start_time = Time.now.midnight + day_no * CONST::DAY_IN_SECOND
+    @showtimes = showtimes.includes(:cinema).where(datetime: (start_time..start_time + 1.day))
 
-  # def retrieve_showtimes(day_no)
-  #   day_in_second = 60 * 60 * 24
-  #   start_time = Time.now.midnight + day_no * day_in_second
-  #   st = showtimes.where(datetime: (start_time..start_time + 1.day))
-  #
-  #   format_cinema_showtimes_json(st)
-  # end
-
-  # provides json for today, tmrw and dayafter
-  def showtimes_json
-
-
-    Jbuilder.new do |movie|
-      movie.today showtimes_by_cinema_json(0)
-      # movie.tomorrow
-      # movie.dayafter
+    cinemas = @showtimes.map(&:cinema).uniq
+    cinemas.map do |cinema|
+      { cinema: cinema.name, showtimes: find_showtimes_by_cinema(@showtimes, cinema) }
     end
   end
 
+  # provides json for today, tmrw and dayafter
+  def showtimes_json(day)
+    showtimes_by_cinema_json(CONST::WORD_DAY_HASH[day]).to_json
+  end
 end

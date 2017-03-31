@@ -3,6 +3,7 @@ require 'sinatra/activerecord'
 require 'multi_json'
 MultiJson.use :yajl
 
+require_relative 'app/constants'
 require_relative 'app/scraper/scraper'
 
 # nodoc
@@ -11,13 +12,16 @@ class SgShowtimesApi < Sinatra::Base
 
   configure :development do
     set :database, adapter: 'sqlite3', database: 'db.sqlite3'
-    set :show_exceptions, :after_handler
 
-    # Scraper.find_showtimes
+    Scraper.find_showtimes
   end
 
   before do
     content_type :json
+  end
+
+  def valid_day?(day)
+    CONST::WORD_DAY_HASH.key?(day)
   end
 
   get '/movies' do
@@ -26,14 +30,22 @@ class SgShowtimesApi < Sinatra::Base
   end
 
   get '/movie/:id' do
-    @movie = Movie.includes(:showtimes, :cinemas).find_by(id: params['id'])
+    @movie = Movie.find_by(id: params['id'])
 
     if @movie
-      @movie.showtimes_json.target!
-      # @movie.showtimes_json
+      @movie.to_builder.target!
     else
       halt 404, '404 Movie resource not found'
     end
+  end
+
+  get '/movie/:id/*' do
+    day = params['splat'][0]
+    @movie = Movie.find_by(id: params['id'])
+    halt 404, '404 Movie resource not found' if @movie.nil?
+    halt 404, 'Invalid day' unless valid_day?(day)
+
+    @movie.showtimes_json(day)
   end
 
   # provide endpoints for today, tmrw, dayafter

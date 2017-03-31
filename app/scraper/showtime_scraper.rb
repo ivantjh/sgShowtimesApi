@@ -1,26 +1,17 @@
+require_relative '../constants'
 require_relative '../models/showtime'
 require_relative '../models/cinema'
 
 # Scrapes showtimes from nokogiri document and save them to db
 module ShowtimeScraper
-  @day_in_second = 60 * 60 * 24
-
   def self.get_date_from_day(day)
-    day_no_hash = {
-      'today' => 0,
-      'tomorrow' => 1,
-      'dayafter' => 2,
-      'dayafter2' => 3,
-      'dayafter3' => 4,
-      'dayafter4' => 5
-    }
-
-    Time.now + @day_in_second * day_no_hash[day]
+    Time.now + CONST::DAY_IN_SECOND * CONST::WORD_DAY_HASH[day]
   end
 
   def self.convert_12h_to_24h(hour, time_period)
+    # THIS IS WRONG
     hour = 0 if time_period == 'AM' && hour == 12
-    hour = 12 if time_period == 'PM' && hour != 12
+    hour += 12 if time_period == 'PM' && hour != 12
     hour
   end
 
@@ -28,6 +19,7 @@ module ShowtimeScraper
     time_str = time_str[/[0-9]{2}:[0-9]{2}(AM|PM)/]
     time_period = time_str.last(2)
     hour = convert_12h_to_24h(time_str.first(2).to_i, time_period)
+    # hour = time_str.first(2).to_i
     min = time_str[3..4].to_i
 
     Time.new(date.year, date.month, date.day, hour, min, 0, date.utc_offset)
