@@ -1,7 +1,5 @@
 require 'sinatra/base'
 require 'sinatra/activerecord'
-require 'multi_json'
-MultiJson.use :yajl
 
 require_relative 'app/constants'
 require_relative 'app/scraper/scraper'
@@ -13,7 +11,7 @@ class SgShowtimesApi < Sinatra::Base
   configure :development do
     set :database, adapter: 'sqlite3', database: 'db.sqlite3'
 
-    Scraper.find_showtimes
+    # Scraper.find_showtimes
   end
 
   before do
@@ -24,21 +22,25 @@ class SgShowtimesApi < Sinatra::Base
     CONST::WORD_DAY_HASH.key?(day)
   end
 
+  # get information for all movies
   get '/movies' do
     @movies = Movie.includes(:genres).all
-    @movies.map { |movie| movie.to_builder.target! }
+    @movies.map(&:gen_json).to_json
   end
 
+  # get information about specific movie
   get '/movie/:id' do
     @movie = Movie.find_by(id: params['id'])
 
     if @movie
-      @movie.to_builder.target!
+      @movie.gen_json
     else
       halt 404, '404 Movie resource not found'
     end
   end
 
+  # retrieve showtimes
+  # today, tomorrow, dayafter supported
   get '/movie/:id/*' do
     day = params['splat'][0]
     @movie = Movie.find_by(id: params['id'])
@@ -47,8 +49,6 @@ class SgShowtimesApi < Sinatra::Base
 
     @movie.showtimes_json(day)
   end
-
-  # provide endpoints for today, tmrw, dayafter
 
   error Sinatra::NotFound do
     content_type :text

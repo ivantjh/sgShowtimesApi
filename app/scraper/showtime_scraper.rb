@@ -9,7 +9,6 @@ module ShowtimeScraper
   end
 
   def self.convert_12h_to_24h(hour, time_period)
-    # THIS IS WRONG
     hour = 0 if time_period == 'AM' && hour == 12
     hour += 12 if time_period == 'PM' && hour != 12
     hour
@@ -19,7 +18,6 @@ module ShowtimeScraper
     time_str = time_str[/[0-9]{2}:[0-9]{2}(AM|PM)/]
     time_period = time_str.last(2)
     hour = convert_12h_to_24h(time_str.first(2).to_i, time_period)
-    # hour = time_str.first(2).to_i
     min = time_str[3..4].to_i
 
     Time.new(date.year, date.month, date.day, hour, min, 0, date.utc_offset)
