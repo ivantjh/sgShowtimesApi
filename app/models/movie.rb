@@ -11,7 +11,7 @@ class Movie < ActiveRecord::Base
   def gen_json
     movie_hash = attributes
     movie_hash[:genres] = genres.map(&:name)
-    movie_hash.to_json
+    movie_hash
   end
 
   def find_showtimes_by_cinema(showtimes, cinema)

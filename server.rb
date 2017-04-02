@@ -27,7 +27,7 @@ class SgShowtimesApi < Sinatra::Base
     @movie = Movie.find_by(id: params['id'])
 
     if @movie
-      @movie.gen_json
+      @movie.gen_json.to_json
     else
       halt 404, '404 Movie resource not found'
     end
