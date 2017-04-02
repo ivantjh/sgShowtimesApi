@@ -37,7 +37,7 @@ module Scraper
     end
   end
 
-  def self.find_showtimes
+  def self.start_scraper
     movie_showtime_links = find_movie_links
 
     movie_showtime_links.each do |link|

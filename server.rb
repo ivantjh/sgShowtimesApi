@@ -10,8 +10,6 @@ class SgShowtimesApi < Sinatra::Base
 
   configure :development do
     set :database, adapter: 'sqlite3', database: 'db.sqlite3'
-
-    # Scraper.find_showtimes
   end
 
   before do
