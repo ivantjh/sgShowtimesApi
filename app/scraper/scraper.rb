@@ -2,6 +2,7 @@ require 'capybara/poltergeist'
 require 'nokogiri'
 require 'net/http'
 
+require_relative '../db_interface'
 require_relative 'movie_scraper'
 require_relative 'showtime_scraper'
 
@@ -38,6 +39,7 @@ module Scraper
   end
 
   def self.start_scraper
+    Db.init_connection
     movie_showtime_links = find_movie_links
 
     movie_showtime_links.each do |link|

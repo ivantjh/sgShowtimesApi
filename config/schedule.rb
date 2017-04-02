@@ -22,6 +22,8 @@
 # set :environment_variable, ''
 # set :environment, ''
 
+# Run `whenver -i` to update crontab
+
 every 1.hour do
-  rake 'scraper:start'
+  rake 'scraper_start'
 end

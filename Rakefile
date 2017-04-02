@@ -6,9 +6,14 @@ namespace :db do
   end
 end
 
-namespace :scraper do
-  task :start do
-    require_relative 'app/scraper/scraper'
-    Scraper.start_scraper
-  end
+desc 'Start scraper'
+task :start_scraper do
+  require_relative 'app/scraper/scraper'
+  Scraper.start_scraper
+end
+
+desc 'Run maintenance module'
+task :maintenance do
+  require_relative 'app/maintenance'
+  Maintenance.run
 end
