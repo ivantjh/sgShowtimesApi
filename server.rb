@@ -8,10 +8,6 @@ require_relative 'app/scraper/scraper'
 class SgShowtimesApi < Sinatra::Base
   register Sinatra::ActiveRecordExtension
 
-  configure :development do
-    set :database, adapter: 'sqlite3', database: 'db.sqlite3'
-  end
-
   before do
     content_type :json
   end

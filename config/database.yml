@@ -1,0 +1,13 @@
+development:
+  adapter: sqlite3
+  database: db.sqlite3
+
+production:
+  adapter: postgresql
+  encoding: utf8
+  database: sgShowtimesApi
+  username: sgsa
+  password: 12345
+  # host: localhost
+  host: 172.17.0.2  # docker ip or host name
+  port: 5432
