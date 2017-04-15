@@ -62,7 +62,7 @@ class SgShowtimesApi < Sinatra::Base
   end
 
   get '/cinemas/:id' do
-    @cinema = Movie.find_by(id: params['id'])
+    @cinema = Cinema.find_by(id: params['id'])
 
     if @cinema
       @cinema.to_json

@@ -69,3 +69,55 @@
   }
 ]
 ```
+
+### `/cinemas`
+```json
+[
+  {
+    "id":1,
+    "name":"Cathay AMK Hub"
+  },
+  {
+    "id":2,
+    "name":"Cathay Causeway Point"
+  },
+  {
+    "id":3,
+    "name":"Cathay Cineleisure"
+  }
+]
+```
+
+### `/cinemas/1`
+```json
+{
+  "id":1,
+  "name":"Cathay AMK Hub"
+}
+```
+
+### `/cinemas/1/today`
+```json
+[
+  {
+    "movie":"Beauty And The Beast",
+    "showtimes":[
+      "2017-04-15T23:40:00+08:00"
+    ]
+  },
+  {
+    "movie":"Power Rangers",
+    "showtimes":[
+      "2017-04-15T21:55:00+08:00"
+    ]
+  },
+  {
+    "movie":"The Boss Baby",
+    "showtimes":[
+      "2017-04-15T18:30:00+08:00",
+      "2017-04-15T20:45:00+08:00",
+      "2017-04-15T23:00:00+08:00"
+    ]
+  }
+]
+```

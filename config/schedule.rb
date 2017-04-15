@@ -27,3 +27,7 @@
 every 1.hour do
   rake 'start_scraper'
 end
+
+every 1.day do
+  rake 'maintenance'
+end
