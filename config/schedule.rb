@@ -25,5 +25,5 @@
 # Run `whenver -i` to update crontab
 
 every 1.hour do
-  rake 'scraper_start'
+  rake 'start_scraper'
 end

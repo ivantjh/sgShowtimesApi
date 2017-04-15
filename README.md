@@ -3,7 +3,7 @@
 Scrapes Singapore showtimes
 
 ## Deployment
-1. Install ruby
+1. Install `phantomjs` and `ruby`
 2. Install the `bundler` gem and run `bundle install --production`
 3. Add the scraper and maintenance task to cron using `bundle exec whenever -w`
 

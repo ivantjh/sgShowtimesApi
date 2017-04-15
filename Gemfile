@@ -7,10 +7,8 @@ gem 'rake'
 gem 'sinatra-activerecord'
 gem 'whenever'
 
-group :development do
-  gem 'rerun'
-  gem 'sqlite3'
-end
+gem 'rerun'
+gem 'sqlite3'
 
 group :production do
   gem 'pg'

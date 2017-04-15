@@ -27,8 +27,7 @@ class Movie < ActiveRecord::Base
                  .includes(:cinema)
                  .where(datetime: (start_time..start_time + 1.day))
 
-    cinemas = @showtimes.map(&:cinema).uniq
-    cinemas.map do |cinema|
+    cinemas.uniq.map do |cinema|
       { cinema: cinema.name,
         showtimes: find_showtimes_by_cinema(@showtimes, cinema) }
     end

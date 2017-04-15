@@ -29,7 +29,7 @@
 ```
 
 
-#### `/movie/1`
+#### `/movies/1`
 ```json
 {
   "id":1,
@@ -45,7 +45,7 @@
 }
 ```
 
-#### `/movie/1/today`
+#### `/movies/1/today`
 ```json
 [
   {
