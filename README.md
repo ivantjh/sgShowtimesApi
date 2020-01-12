@@ -2,6 +2,16 @@
 
 Scrapes Singapore showtimes
 
+## Development
+1. Install `phantomjs` and `ruby 2.7`
+2. Install the `bundler` gem and run `bundle install`
+3. Run `ruby server.rb`
+
+### To test web scraper
+1. Run `irb` (`ruby` interpreter) in home directory
+2. Type `load "./app/scraper/scraper.rb"` into `irb`
+3. Type `Scraper.start_scraper` to test
+
 ## Deployment
 1. Install `phantomjs` and `ruby 2.4`
 2. Install the `bundler` gem and run `bundle install --production`

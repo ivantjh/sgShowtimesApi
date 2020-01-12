@@ -1,3 +1,3 @@
-require_relative '../app/scraper/scraper'
-
-Scraper.start_scraper
+# require_relative '../app/scraper/scraper'
+#
+# Scraper.start_scraper

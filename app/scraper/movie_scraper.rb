@@ -20,17 +20,29 @@ module MovieScraper
   end
 
   def self.find_language(details)
-    trim_detail details[2]
+    language_str = details[2]
+    language_str.strip! # Strips backspace if any
+
+    languages = language_str.split('/')
+    languages.each do |lang|
+      lang.strip!
+    end 
+    languages.join(', ')
+
+    # trim_detail details[2]
   end
 
   def self.find_genres(details)
-    genre_str = details[3]
+    # If no, just skip
+
     genres = genre_str.split(' / ')
     genres[genres.length - 1] = trim_detail(genres.last)
     genres
   end
 
   def self.find_duration(details)
+    # If no, just skip
+
     details[4].split(/[^\d]/).join
   end
 
@@ -45,14 +57,21 @@ module MovieScraper
   end
 
   def self.save_movie(document)
-    title = document.css('.visible-xs h1').text
-    movie = Movie.find_by(title: title)
+    # spaces in css class is to unwrap enclosing class
+    content_class = document.css('.moviedetail-top-content .visible-xs')
 
-    return movie unless movie.nil?
-    details = document.css('.visible-xs p small').text.split("\n")
-    genres = find_genres(details)
-    save_genres(genres)
+    title = content_class.css('h1').text
+    # movie = Movie.find_by(title: title)
+    # return movie unless movie.nil?
 
-    create_movie(details, title, genres)
+    details = content_class.css('p small').text.split("\n")
+    details.each_with_index do |d, idx|
+      puts "#{idx}: #{d}"
+    end
+
+    # genres = find_genres(details)
+    # save_genres(genres)
+
+    # create_movie(details, title, genres)
   end
 end

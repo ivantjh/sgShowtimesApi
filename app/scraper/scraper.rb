@@ -51,4 +51,17 @@ module Scraper
       scrape_showtimes(document, movie.id)
     end
   end
+
+  def self.debug_scraper
+    # Only runs for a single movie link
+    Db.init_connection
+    link = find_movie_links[0]
+
+    uri = URI(link)
+    body = Net::HTTP.get(uri)
+    document = Nokogiri::HTML(body)
+
+    movie = MovieScraper.save_movie(document)
+    # scrape_showtimes(document, movie.id)
+  end
 end
