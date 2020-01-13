@@ -46,6 +46,7 @@
 ```
 
 #### `/movies/1/today`
+`today` can be `tomorrow` or `dayafter`
 ```json
 [
   {
@@ -97,6 +98,7 @@
 ```
 
 ### `/cinemas/1/today`
+`today` can be `tomorrow` or `dayafter`
 ```json
 [
   {
