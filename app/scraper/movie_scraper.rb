@@ -95,10 +95,6 @@ module MovieScraper
     return movie unless movie.nil?
 
     details = content_class.css('p small').text.split("\n")
-    # details.each_with_index do |d, idx|
-    #   puts "#{idx}: #{d}"
-    # end
-
     genres = find_genres(details[3])
     save_genres(genres)
 
