@@ -6,10 +6,13 @@ require_relative '../models/cinema'
 module ShowtimeScraper
   def self.get_date_from_day(day)
     # puts day
-    Time.now + CONST::DAY_IN_SECOND * CONST::WORD_DAY_HASH[day]
+    Time.now + CONST::DAY_IN_SECOND * CONST::TAB_NUM_DAY_HASH[day]
   end
 
   def self.convert_12h_to_24h(hour, time_period)
+    puts hour
+    puts time_period
+
     hour = 0 if (time_period == 'AM' && hour == 12)
     hour += 12 if (time_period == 'PM' && hour != 12)
     hour

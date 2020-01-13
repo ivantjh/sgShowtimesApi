@@ -25,12 +25,15 @@ class Movie < ActiveRecord::Base
     start_time = Time.now.midnight + day_no * CONST::DAY_IN_SECOND
     @showtimes = showtimes
                  .includes(:cinema)
-                 .where(datetime: (start_time..start_time + 1.day))
+                 .where(datetime: start_time..(start_time + 1.day))
 
-    cinemas.uniq.map do |cinema|
-      { cinema: cinema.name,
-        showtimes: find_showtimes_by_cinema(@showtimes, cinema) }
+    arr = cinemas.uniq.map do |cinema|
+        { cinema: cinema.name,
+          showtimes: find_showtimes_by_cinema(@showtimes, cinema) }    
     end
+
+    arr.reject! { |value| value[:showtimes].length === 0 }
+    arr
   end
 
   # Provides json for a specific day
