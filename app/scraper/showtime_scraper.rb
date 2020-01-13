@@ -5,18 +5,24 @@ require_relative '../models/cinema'
 # Scrapes showtimes from nokogiri document and save them to db
 module ShowtimeScraper
   def self.get_date_from_day(day)
-    Time.now + CONST::DAY_IN_SECOND * CONST::WORD_DAY_HASH[day]
+    # puts day
+    Time.now + CONST::DAY_IN_SECOND * CONST::TAB_NUM_DAY_HASH[day]
   end
 
   def self.convert_12h_to_24h(hour, time_period)
-    hour = 0 if time_period == 'AM' && hour == 12
-    hour += 12 if time_period == 'PM' && hour != 12
+    hour = 0 if (time_period == 'AM' && hour == 12)
+    hour += 12 if (time_period == 'PM' && hour != 12)
     hour
   end
 
   def self.combine_date_time(date, time_str)
-    time_str = time_str[/[0-9]{2}:[0-9]{2}(AM|PM)/]
-    time_period = time_str.last(2)
+    # This is needed because there may be some random values behind the time str
+    time_str = time_str[/[0-9]{1,2}:[0-9]{2}(AM|PM)/]
+
+    # pad with zero if time_str is not complete 12 hr time, need to be '07:30PM' and not '7:30PM'
+    time_str = '0' + time_str if time_str.length != 7
+
+    time_period = time_str.last(2) # gets the last 2 characters 'AM' or 'PM'
     hour = convert_12h_to_24h(time_str.first(2).to_i, time_period)
     min = time_str[3..4].to_i
 
@@ -42,6 +48,7 @@ module ShowtimeScraper
   end
 
   def self.save_showtimes(document, movie_id)
+    # document.attr('id') gets the attribute of id in html
     date = get_date_from_day(document.attr('id'))
 
     document.css('.panel.panel-default').each do |panel_default|

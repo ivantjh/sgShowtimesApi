@@ -4,8 +4,23 @@
 
 Scrapes Singapore showtimes
 
+## Development
+1. Install `phantomjs` and `ruby 2.7`
+2. Install the `bundler` gem and run `bundle install`
+3. Set up database
+4. Run `ruby server.rb`
+
+### To test web scraper
+1. Run `irb` (`ruby` interpreter) in home directory
+2. Type `load "./app/scraper/scraper.rb"` into `irb`
+3. Type `Scraper.start_scraper` to test
+
+### To set up database
+1. Run `rake db:environment:set` if needed
+2. Run `rake db:setup`
+
 ## Deployment
-1. Install `phantomjs` and `ruby 2.4`
+1. Install `phantomjs` and `ruby 2.7`
 2. Install the `bundler` gem and run `bundle install --production`
 3. Add the scraper and maintenance task to cron using `bundle exec whenever -w`
 
