@@ -10,19 +10,19 @@ module ShowtimeScraper
   end
 
   def self.convert_12h_to_24h(hour, time_period)
-    puts hour
-    puts time_period
-
     hour = 0 if (time_period == 'AM' && hour == 12)
     hour += 12 if (time_period == 'PM' && hour != 12)
     hour
   end
 
   def self.combine_date_time(date, time_str)
-    # time_str = time_str[/[0-9]{2}:[0-9]{2}(AM|PM)/]
+    # This is needed because there may be some random values behind the time str
+    time_str = time_str[/[0-9]{1,2}:[0-9]{2}(AM|PM)/]
 
     # pad with zero if time_str is not complete 12 hr time, need to be '07:30PM' and not '7:30PM'
     time_str = '0' + time_str if time_str.length != 7
+    puts "HELLO"
+    puts time_str
 
     time_period = time_str.last(2) # gets the last 2 characters 'AM' or 'PM'
     hour = convert_12h_to_24h(time_str.first(2).to_i, time_period)
