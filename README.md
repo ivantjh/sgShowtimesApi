@@ -1,7 +1,5 @@
 # sgShowtimesApi
 
-## This project is currently not functional as the web scraper is not working.
-
 Scrapes Singapore showtimes
 
 ## Development
