@@ -48,8 +48,10 @@ module Scraper
       document = Nokogiri::HTML(body)
 
       movie = MovieScraper.save_movie(document)
-      # scrape_showtimes(document, movie.id)
+      scrape_showtimes(document, movie.id)
     end
+
+    nil
   end
 
   def self.debug_scraper
@@ -63,5 +65,7 @@ module Scraper
 
     movie = MovieScraper.save_movie(document)
     scrape_showtimes(document, movie.id)
+
+    nil
   end
 end
