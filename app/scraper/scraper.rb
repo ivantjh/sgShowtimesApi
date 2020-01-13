@@ -48,7 +48,7 @@ module Scraper
       document = Nokogiri::HTML(body)
 
       movie = MovieScraper.save_movie(document)
-      scrape_showtimes(document, movie.id)
+      # scrape_showtimes(document, movie.id)
     end
   end
 
@@ -62,6 +62,6 @@ module Scraper
     document = Nokogiri::HTML(body)
 
     movie = MovieScraper.save_movie(document)
-    # scrape_showtimes(document, movie.id)
+    scrape_showtimes(document, movie.id)
   end
 end
